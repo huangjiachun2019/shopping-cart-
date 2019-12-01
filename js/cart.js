@@ -123,4 +123,55 @@ function calcTotal() {
 }
 // 需要一开始就计算一次
 calcTotal();
+
+//--------------------------------
+ // 实现数量的加号
+ //使用委托点击加减更改数量
+ $('.item-list').on('click','.add',function(){
+  // 让 输入框里面的 数量增加
+  let prev=$(this).prev();
+  let current=prev.val();
+  //点击递增
+  prev.val(++current);
+  // 数量也要更新到本地数据（同点选、全选更改本地同理）
+  let id=$(this).parents('.item').attr('data-id');
+  let obj=arr.find(e=>{
+    return e.pID == id;
   });
+  obj.number=current;
+  // 把数据更新会本地数据
+  kits.saveData('cartListData',arr);
+  // 调用上一个封装函数进行重新计算
+  calcTotal();
+  // 更新右边的总价
+ // find这个方法用于查找某个元素的后代元素中，满足条件的部分
+  $(this).parents('.item').find('.computed').text(obj.number * obj.price);
+})
+
+  // 实现数量的减号
+  $('.item-list').on('click','.reduce',function(){
+    // 让 输入框里面的 数量增加
+    let next=$(this).next();
+    let current=next.val();
+    // 商品不可以小于1
+    if(current<= 1){
+      alert('商品的件数不能小于1');
+      return;
+    }
+    //点击递减
+    next.val(--current);
+    // 数量也要更新到本地数据
+    let id = $(this).parents('.item').attr('data-id');
+    let obj = arr.find(e=>{
+      return e.pID == id;
+    });
+    obj.number = current;
+    // 要把数据存储到本地里面才可以
+    kits.saveData('cartListData',arr);
+    // 调用上一个封装函数进行重新计算
+    calcTotal();
+    // 更新右边的总价
+    $(this).parents('.item').find('.computed').text(obj.number * obj.price);
+  })
+  });
+  
