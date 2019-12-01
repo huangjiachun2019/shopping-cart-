@@ -11,9 +11,11 @@ $(()=>{
     });
 
 //把该页面会改变的动态数据修改，此处模拟数据库所以修改较少（以下3个）
-//修改价格
+//修改动态名字
 $('.sku-name').text(target.name);
+//修改动态价格
 $('.dd>em').text(`￥${target.price}`);
+//修改动态图片
 $('.preview-img>img').attr('src',target.imgSrc)
 
 })
