@@ -57,6 +57,9 @@ let obj ={
     arr.push(obj);
 }
     //存到本地数据
-    kits.saveData('cartListData',arr)
+    kits.saveData('cartListData',arr);
+   //跳转购物车页面
+   location.href='./cart.html'; //js里面的路劲要相对于引用他的html页面来说的
+
 })
 })
