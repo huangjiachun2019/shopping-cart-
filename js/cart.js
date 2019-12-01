@@ -202,5 +202,25 @@ calcTotal();
 $(this).parents('.item').find('.computed').text(obj.number * obj.price);
 })
 
+//-------------------------------
+//删除（通过委托获取点击删除）
+$('.item-list').on('click','.item-del',function(){
+  //jqui 的layer.js 获取不同样式的提示框
+  layer.confirm('你确定要删除吗?', {icon: 0, title:'警告'}, (index)=>{
+    layer.close(index);
+    // 在这里执行 删除的逻辑
+    // 先得到要删除的数据的id
+    let id = $(this).parents('.item').attr('data-id');
+    // 把当前点击的这个删除对应的这一行删掉
+    $(this).parents('.item').remove();
+    // 还要把本地存储里面的数据删除
+    arr = arr.filter(e=>{
+      return e.pID != id;
+    });
+    kits.saveData('cartListData',arr);
+    // 重新更新总件数和总价
+    calcTotal();
+  });
+})
 });
   
