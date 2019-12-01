@@ -21,11 +21,30 @@ $('.preview-img>img').attr('src',target.imgSrc)
 //------------------
 //点击加入购物车
 $('.addshopcar').on('click', function () {
+//先获取输入框个个数
+let number=$('.choose-number').val();
+//保证输入框输入是正确的数字，且不能为空(trim是去除空格的函数)
+if(number.trim().length===0||isNaN(number)||parseInt(number)<=0){
+    alert('商品数量有误，请正确输入');
+    return;
+}
 //把相关信息存入本地，因数据多，需建立数组进行存储
 //定义一个键，用于读取本地数据
 let arr=kits.loadData('cartListData')
 //有了数组就可以存数据了
-
+//数组里存的是对象，每个商品都是一个对象，需要自己构造数据对象
+let obj ={
+    pID : target.pID,
+    imgSrc : target.imgSrc,
+    name : target.name,
+    price : target.price,
+    // 件数要从输入框里面获取
+    number : number
+};
+    // 把数据放到数组里面
+    arr.push(obj);
+    //存到本地数据
+    kits.saveData('cartListData',arr)
 
 
 
