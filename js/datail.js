@@ -32,7 +32,19 @@ if(number.trim().length===0||isNaN(number)||parseInt(number)<=0){
 //定义一个键，用于读取本地数据
 let arr=kits.loadData('cartListData')
 //有了数组就可以存数据了
-//数组里存的是对象，每个商品都是一个对象，需要自己构造数据对象
+
+//假设商品已存在本地，在加入购物车时，需要在本地实行叠加
+//通过id判断是否存在
+let exist =arr.find(e=>{
+    return e.pID==id
+});
+// 确保数量是数字，把数量先转换为数字,number=输入框输入输入的数字，前面已定义
+number = parseInt(number);
+//如果id相等，即本地存在相同的数据，可以叠加，不需新构造对象
+if (exist){
+   exist.number+=number;
+}else{
+//当本地没有该商品对应的数据，就需要重新构建对象加入数组中
 let obj ={
     pID : target.pID,
     imgSrc : target.imgSrc,
@@ -43,11 +55,8 @@ let obj ={
 };
     // 把数据放到数组里面
     arr.push(obj);
+}
     //存到本地数据
     kits.saveData('cartListData',arr)
-
-
-
 })
-
 })
