@@ -52,4 +52,24 @@ $(function () {
       $('.cart-header').show(); // 显示表头
       $('.total-of').show(); // 显示用于结算的div
     }
+
+//-----------------------------
+//实现全选与点选
+//点击表头的全选时
+$('.pick-all').on('click',function(){
+//jq里的开关属性的两种方法: 1.获取开关属性：jq对象.prop（属性名）
+//2.设置开关属性：jq对象.prop（属性名，属性值）
+let status=$(this).prop('checked');
+$('.item-ck').prop('checked',status);
+$('.pick-all').prop('checked',status);
+
+})
+//由于购物车里的商品都是动态生成，使用要有委托
+$('.item-list').on('click','.item-ck',function(){
+    //如果勾选个数和总个数一致就是全选
+    let ckall=$('.item-ck').length===$('.item-ck:checked').length;
+    //设置全选等于ckall
+    $('.pick-all').prop('checked',ckall);
+})
+
   });
