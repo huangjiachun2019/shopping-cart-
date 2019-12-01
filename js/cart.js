@@ -166,12 +166,41 @@ calcTotal();
       return e.pID == id;
     });
     obj.number = current;
-    // 要把数据存储到本地里面才可以
+    // 把数据更新会本地数据
     kits.saveData('cartListData',arr);
     // 调用上一个封装函数进行重新计算
     calcTotal();
     // 更新右边的总价
     $(this).parents('.item').find('.computed').text(obj.number * obj.price);
   })
-  });
+
+  //----------------------
+  //手写输入时，以输入框失焦为数据更改完毕，下面就开始写手写输入后相关数据的改变
+  //同理，使用委托获取失焦(blur)事件
+  $('.item-list').on('blur','.number',function(){
+
+let current=$(this).val();
+//与加减一样，需验证用户输入内容
+if (current.trim().length === 0 || isNaN(current) || parseInt(current) <= 0) {
+  let old=$(this).attr('data-old');
+  // 如果用户输入的不正确，恢复之前的正确的数字
+  $(this).val(old);
+  alert('输入有误，请从新正确数字');
+  return;
+}
+//如果输入正确，将数据存入本地把相应数据更新
+let id=$(this).parents('.item').attr('data-id');
+let obj=arr.find(e=>{
+  return e.pID==id;  
+});
+obj.number = parseInt(current);
+// 把数据更新会本地数据
+kits.saveData('cartListData',arr);
+// 更新总件数和总价格
+calcTotal();
+// 更新右边的总价
+$(this).parents('.item').find('.computed').text(obj.number * obj.price);
+})
+
+});
   
