@@ -1,5 +1,5 @@
 
-$(()=>{
+$(function (){
     //location.search是获取链接中？后面的一种方法
     //substring(4)就是将字符串从第4位后进行截取，此处目的主要是截取id
     let id=location.search.substring(4);
@@ -30,7 +30,7 @@ if(number.trim().length===0||isNaN(number)||parseInt(number)<=0){
 }
 //把相关信息存入本地，因数据多，需建立数组进行存储
 //定义一个键，用于读取本地数据
-let arr=kits.loadData('cartListData')
+let arr=kits.loadData('cartListData');
 //有了数组就可以存数据了
 
 //假设商品已存在本地，在加入购物车时，需要在本地实行叠加
@@ -51,7 +51,9 @@ let obj ={
     name : target.name,
     price : target.price,
     // 件数要从输入框里面获取
-    number : number
+    number : number,
+    //刷新后仍保持原来的勾选状态（cart.js 48行）
+    isChecked : true
 };
     // 把数据放到数组里面
     arr.push(obj);
@@ -62,4 +64,4 @@ let obj ={
    location.href='./cart.html'; //js里面的路劲要相对于引用他的html页面来说的
 
 })
-})
+});
