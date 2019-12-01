@@ -78,7 +78,8 @@ arr.forEach(e=>{
 })
 // 重新存进本地数据
 kits.saveData('cartListData',arr);
-
+    // 点击全选的时候，也需要把数据重新更新
+        calcTotal();
 })
 //由于购物车里的商品都是动态生成，使用要有委托
 $('.item-list').on('click','.item-ck',function(){
@@ -100,6 +101,26 @@ $('.item-list').on('click','.item-ck',function(){
     });
     // 把数据更新会本地数据
     kits.saveData('cartListData',arr);
+        // 每次点选需要计算总价和总件数
+        calcTotal();
 })
 
+//-------------------------
+//封装一个计算总价与总件数的函数，方便使用时调用
+function calcTotal() {
+ //计算时需要从本地拿 isChecked 为true的数据进行计算
+  let totalCount = 0; // 总件数
+  let totalMoney = 0; // 总价格
+  arr.forEach(e => {
+    if (e.isChecked) {
+      totalCount += e.number;
+      totalMoney += e.number * e.price;
+    }
+  })
+  // 把总价和总件数更新到页面里面
+  $('.selected').text(totalCount);
+  $('.total-money').text(totalMoney);
+}
+// 需要一开始就计算一次
+calcTotal();
   });
