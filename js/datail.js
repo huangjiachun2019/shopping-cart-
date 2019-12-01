@@ -18,4 +18,17 @@ $('.dd>em').text(`￥${target.price}`);
 //修改动态图片
 $('.preview-img>img').attr('src',target.imgSrc)
 
+//------------------
+//点击加入购物车
+$('.addshopcar').on('click', function () {
+//把相关信息存入本地，因数据多，需建立数组进行存储
+//定义一个键，用于读取本地数据
+let arr=kits.loadData('cartListData')
+//有了数组就可以存数据了
+
+
+
+
+})
+
 })
